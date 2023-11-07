@@ -12,7 +12,8 @@
     "lint": "eslint --ignore-path .gitignore --fix src",
     "prettier": "prettier src --write",
     "postinstall": "cd cdk && npm ci",
-    "deploy": "npm run build && cd cdk && npm run deploy"
+    "deploy:cdk": "npm run build && cd cdk && npm run deploy",
+    "deploy:terraform": "npm run build && cd terraform && terraform apply -target=aws_s3_object.dist"
   },
   "dependencies": {
     "@emotion/react": "^11.9.3",
