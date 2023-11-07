@@ -37,7 +37,7 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           color="textSecondary"
           component="p"
         >
-          Thank you for your purchase! You are welcome.
+          Thank you for your purchase! Deployed using terraform
         </Typography>
         <Copyright />
       </Box>
