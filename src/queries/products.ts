@@ -9,7 +9,7 @@ export function useAvailableProducts() {
     "available-products",
     async () => {
       const res = await axios.get<AvailableProduct[]>(
-        `${API_PATHS.bff}/product/available`
+        `${API_PATHS.product}/products`
       );
       return res.data;
     }
@@ -29,7 +29,7 @@ export function useAvailableProduct(id?: string) {
     ["product", { id }],
     async () => {
       const res = await axios.get<AvailableProduct>(
-        `${API_PATHS.bff}/product/${id}`
+        `${API_PATHS.product}/products/${id}`
       );
       return res.data;
     },
@@ -48,7 +48,7 @@ export function useRemoveProductCache() {
 
 export function useUpsertAvailableProduct() {
   return useMutation((values: AvailableProduct) =>
-    axios.put<AvailableProduct>(`${API_PATHS.bff}/product`, values, {
+    axios.post<AvailableProduct>(`${API_PATHS.product}/products`, values, {
       headers: {
         Authorization: `Basic ${localStorage.getItem("authorization_token")}`,
       },
@@ -58,10 +58,33 @@ export function useUpsertAvailableProduct() {
 
 export function useDeleteAvailableProduct() {
   return useMutation((id: string) =>
-    axios.delete(`${API_PATHS.bff}/product/${id}`, {
+    axios.delete(`${API_PATHS.product}/product/${id}`, {
       headers: {
         Authorization: `Basic ${localStorage.getItem("authorization_token")}`,
       },
     })
+  );
+}
+
+export function useImportFile(fileName?: string) {
+  return useQuery<{ uploadUrl: string }, AxiosError>(
+    ["import", { fileName }],
+    async () => {
+      const token = localStorage.getItem("authorization_token");
+      const res = await axios.get<{ uploadUrl: string }>(
+        `${API_PATHS.import}/import?name=${fileName}`,
+        {
+          headers: token
+            ? {
+                Authorization: `Basic ${localStorage.getItem(
+                  "authorization_token"
+                )}`,
+              }
+            : {},
+        }
+      );
+      return res.data;
+    },
+    { enabled: false, cacheTime: 0 }
   );
 }
