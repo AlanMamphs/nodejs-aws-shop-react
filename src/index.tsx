@@ -20,7 +20,6 @@ const queryClient = new QueryClient({
         // if ((error as AxiosError).response?.status === 401) {
         //   alert("401: Unauthenticated");
         // }
-
         // if ((error as AxiosError).response?.status === 403) {
         //   alert("403: Unauthorized");
         // }
